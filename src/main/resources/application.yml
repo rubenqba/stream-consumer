@@ -1,0 +1,19 @@
+spring:
+  rabbitmq:
+    username: ${AMQP_USERNAME:guest}
+    password: ${AMQP_PASSWORD:guest}
+    host: ${AMQP_ENDPOINT:localhost}
+    port: ${AMQP_PORT:5672}
+  cloud:
+    stream:
+      rabbit:
+        default:
+          producer:
+            routing-key-expression: 'headers["type"]'
+        bindings:
+          counter-in-0:
+            consumer:
+              bindingRoutingKey: counter
+      bindings:
+        counter-in-0:
+          destination: events
